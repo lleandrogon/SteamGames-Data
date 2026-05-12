@@ -1,0 +1,5 @@
+**/logs
+volumes/steam/**/*
+!volumes/steam/**/.gitkeep
+__pycache__/
+.env
