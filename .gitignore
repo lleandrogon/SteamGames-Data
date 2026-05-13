@@ -1,4 +1,5 @@
 **/logs
+volumes/minio/
 volumes/steam/**/*
 !volumes/steam/**/.gitkeep
 __pycache__/
