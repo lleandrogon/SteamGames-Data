@@ -295,5 +295,25 @@ services:
       mc mirror /steam local/steam || true;
       "
 
+  jupyter:
+    image: jupyter/base-notebook:python-3.11
+    environment:
+      JUPYTER_ENABLE_LAB: "${JUPYTER_ENABLE_LAB}"
+      JUPYTER_TOKEN: "${JUPYTER_TOKEN}"
+      PIP_ADDITIONAL_REQUIREMENTS: "${_PIP_ADDITIONAL_REQUIREMENTS}"
+    command: >
+      bash -c "
+      if [ -n \"$$PIP_ADDITIONAL_REQUIREMENTS\" ]; then
+        pip install --no-cache-dir $$PIP_ADDITIONAL_REQUIREMENTS || true;
+      fi;
+      start-notebook.sh
+      "
+    ports:
+      - "8888:8888"
+      - "4040:4040"
+    volumes:
+      - ./src:/home/jovyan/notebooks
+      - ./volumes:/home/jovyan/volumes
+
 volumes:
   postgres-db-volume:
