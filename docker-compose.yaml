@@ -297,6 +297,8 @@ services:
 
   jupyter:
     image: jupyter/base-notebook:python-3.11
+    env_file:
+      - .env
     environment:
       JUPYTER_ENABLE_LAB: "${JUPYTER_ENABLE_LAB}"
       JUPYTER_TOKEN: "${JUPYTER_TOKEN}"
