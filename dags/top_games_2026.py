@@ -46,4 +46,10 @@ with DAG(
         sql = "create_table_top_games_2026.sql"
     )
 
-    e_games >> t_silver_games >> t_gold_games >> ct_top_games_2026
+    cui_app_id = SQLExecuteQueryOperator(
+        task_id = "create_unique_index_app_id",
+        conn_id = "steam",
+        sql = "create_unique_index_top_games_2026.sql"
+    )
+
+    e_games >> t_silver_games >> t_gold_games >> ct_top_games_2026 >> cui_app_id
