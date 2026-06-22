@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..",
 from bronze.steam import extract_games
 from silver.steam import transform_silver_games
 from gold.steam import transform_gold_games
+from loaders.steam import load_games
 
 with DAG(
     dag_id = "top_games_2026",
@@ -52,4 +53,9 @@ with DAG(
         sql = "create_unique_index_top_games_2026.sql"
     )
 
-    e_games >> t_silver_games >> t_gold_games >> ct_top_games_2026 >> cui_app_id
+    l_games = PythonOperator(
+        task_id = "load_games",
+        python_callable = load_games
+    )
+
+    e_games >> t_silver_games >> t_gold_games >> ct_top_games_2026 >> cui_app_id >> l_games
